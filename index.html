@@ -333,7 +333,7 @@
             featuredList.innerHTML = featuredProducts.map(p => createProductCardHTML(p, 'feat')).join('');
 
             const entertainmentList = document.getElementById('entertainment-list');
-            const entertainmentProducts = products.filter(p => ["Netflix", "PrimeVideo", "Spotify", "Crunchyroll"].includes(p.name));
+            const entertainmentProducts = products.filter(p => ["Netflix", "PrimeVideo", "Spotify", "Crunchyroll",  "Hoichoi", "Chorki"].includes(p.name));
             entertainmentList.innerHTML = entertainmentProducts.map(p => createProductCardHTML(p, 'ent')).join('');
 
             const allProductsList = document.getElementById('all-products-list');
