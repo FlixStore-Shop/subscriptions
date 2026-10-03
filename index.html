@@ -148,14 +148,71 @@
 
     <!-- Hero Section -->
     <main class="pt-32 pb-16 px-6 max-w-7xl mx-auto relative z-10 flex-grow">
-        <div class="text-center max-w-3xl mx-auto mb-20">
-            <h1 class="text-5xl md:text-6xl font-extrabold mb-6 tracking-tight text-white leading-tight">
-                Unlock Premium <br />
-                <span class="text-gradient">Digital Experiences</span>
-            </h1>
-            <p class="text-lg md:text-xl text-slate-400 font-light max-w-2xl mx-auto">
-                Instant access to top-tier entertainment and productivity platforms. Quality products delivered directly to you.
-            </p>
+        
+      <!-- Featured Promotional Banners -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-20">
+            
+            <!-- Main Large Banner (Auto-Slider) -->
+            <div class="lg:col-span-2 relative rounded-2xl overflow-hidden group glass-card border border-white/10 bg-slate-800/50 shadow-2xl" id="slider-container">
+                
+                <!-- Slider Track holding 5 images -->
+                <div id="slider-track" class="flex w-full h-full transition-transform duration-500 ease-in-out">
+                    <!-- Slide 1 -->
+                    <div class="w-full flex-shrink-0 h-full">
+                        <img src="main-banner-1.png" alt="Slide 1" class="w-full h-full object-cover min-h-[250px] lg:min-h-[400px]">
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="w-full flex-shrink-0 h-full">
+                        <img src="main-banner-2.png" alt="Slide 2" class="w-full h-full object-cover min-h-[250px] lg:min-h-[400px]">
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="w-full flex-shrink-0 h-full">
+                        <img src="main-banner-3.png" alt="Slide 3" class="w-full h-full object-cover min-h-[250px] lg:min-h-[400px]">
+                    </div>
+                    <!-- Slide 4 -->
+                    <div class="w-full flex-shrink-0 h-full">
+                        <img src="main-banner-4.png" alt="Slide 4" class="w-full h-full object-cover min-h-[250px] lg:min-h-[400px]">
+                    </div>
+                    <!-- Slide 5 -->
+                    <div class="w-full flex-shrink-0 h-full">
+                        <img src="main-banner-5.png" alt="Slide 5" class="w-full h-full object-cover min-h-[250px] lg:min-h-[400px]">
+                    </div>
+                </div>
+                
+                <!-- Overlay Gradient -->
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent pointer-events-none"></div>
+                
+                <!-- Left/Right Slider Navigation Arrows -->
+                <button onclick="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/90 border border-white/10 text-white p-2.5 rounded-full backdrop-blur-md transition-all opacity-0 group-hover:opacity-100 hover:scale-110 shadow-lg z-20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" /></svg>
+                </button>
+                <button onclick="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/90 border border-white/10 text-white p-2.5 rounded-full backdrop-blur-md transition-all opacity-0 group-hover:opacity-100 hover:scale-110 shadow-lg z-20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
+                </button>
+
+                <!-- Slider Pagination Dots (5 dots) -->
+                <div class="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2.5 z-20" id="slider-dots">
+                    <div onclick="goToSlide(0)" class="w-8 h-2 rounded-full bg-white shadow-md cursor-pointer transition-all duration-300"></div>
+                    <div onclick="goToSlide(1)" class="w-2.5 h-2.5 rounded-full bg-white/40 hover:bg-white/80 transition-all duration-300 cursor-pointer shadow-md"></div>
+                    <div onclick="goToSlide(2)" class="w-2.5 h-2.5 rounded-full bg-white/40 hover:bg-white/80 transition-all duration-300 cursor-pointer shadow-md"></div>
+                    <div onclick="goToSlide(3)" class="w-2.5 h-2.5 rounded-full bg-white/40 hover:bg-white/80 transition-all duration-300 cursor-pointer shadow-md"></div>
+                    <div onclick="goToSlide(4)" class="w-2.5 h-2.5 rounded-full bg-white/40 hover:bg-white/80 transition-all duration-300 cursor-pointer shadow-md"></div>
+                </div>
+            </div>
+
+            <!-- Stacked Side Banners (Right Side) -->
+            <div class="flex flex-col gap-6">
+                <!-- Top Side Banner -->
+                <a href="#" class="relative rounded-2xl overflow-hidden glass-card border border-white/10 bg-slate-800/50 group block h-full shadow-xl">
+                    <img src="side-banner-1.png" alt="ChatGPT Plus Offer" class="w-full h-full object-cover min-h-[150px] transition-transform duration-700 group-hover:scale-105">
+                </a>
+                
+                <!-- Bottom Side Banner -->
+                <a href="#" class="relative rounded-2xl overflow-hidden glass-card border border-white/10 bg-slate-800/50 group block h-full shadow-xl">
+                    <img src="side-banner-2.png" alt="Netflix and Prime Combo" class="w-full h-full object-cover min-h-[150px] transition-transform duration-700 group-hover:scale-105">
+                </a>
+            </div>
+            
         </div>
 
         <div class="space-y-16">
@@ -547,7 +604,59 @@
             
             window.open(whatsappURL, '_blank');
         }
+    // --- Slider Logic ---
+        let currentSlide = 0;
+        const totalSlides = 5;
+        let slideInterval;
 
+        function updateSlider() {
+            const track = document.getElementById('slider-track');
+            const dots = document.getElementById('slider-dots').children;
+            
+            // Move the image track left or right
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            // Update the width and opacity of the dots
+            for (let i = 0; i < dots.length; i++) {
+                if (i === currentSlide) {
+                    dots[i].className = "w-8 h-2 rounded-full bg-white shadow-md cursor-pointer transition-all duration-300";
+                } else {
+                    dots[i].className = "w-2.5 h-2.5 rounded-full bg-white/40 hover:bg-white/80 transition-all duration-300 cursor-pointer shadow-md";
+                }
+            }
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider();
+            resetAutoSlide(); // Reset timer if clicked manually
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlider();
+            resetAutoSlide(); // Reset timer if clicked manually
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlider();
+            resetAutoSlide(); // Reset timer if clicked manually
+        }
+
+        function startAutoSlide() {
+            // Automatically change slides every 3.5 seconds (3500 milliseconds)
+            slideInterval = setInterval(nextSlide, 3500); 
+        }
+
+        function resetAutoSlide() {
+            clearInterval(slideInterval);
+            startAutoSlide();
+        }
+
+        // Start the automatic sliding when the page loads
+        startAutoSlide();
+        // --------------------
         // Initialize store on load
         renderProducts();
         updateCart();
