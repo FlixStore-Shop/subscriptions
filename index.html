@@ -393,7 +393,8 @@
             { id: 6, name: "Google One", price: 499.00, img: "Googleone.png" },
             { id: 7, name: "YouTube Premium", price: 150.00, img: "YT.png" },
             { id: 8, name: "Hoichoi", price: 150.00, img: "hoichoi.png" },
-            { id: 9, name: "Chorki", price: 250.00, img: "chorki.png" }
+            { id: 9, name: "Chorki", price: 250.00, img: "chorki.png" },
+            { id: 9, name: "Netflix+Prime", price: 399.00, img: "net+prime.png" }
         ];
 
         let cart = [];
@@ -472,7 +473,7 @@
         // Render products into their specific sections based on exact original logic
         function renderProducts() {
             const featuredList = document.getElementById('featured-list');
-            const featuredProducts = products.filter(p => p.name === "Netflix" || p.name === "PrimeVideo");
+            const featuredProducts = products.filter(p => p.name === "Netflix" || p.name === "PrimeVideo" || p.name === "Netflix+Prime");
             featuredList.innerHTML = featuredProducts.map(p => createProductCardHTML(p, 'feat')).join('');
 
             const entertainmentList = document.getElementById('entertainment-list');
