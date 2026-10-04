@@ -157,24 +157,24 @@
                 
                 <!-- Slider Track holding 5 images -->
                 <div id="slider-track" class="flex w-full h-full transition-transform duration-500 ease-in-out">
-                    <!-- Slide 1 -->
-                    <div class="w-full flex-shrink-0 h-full">
+                    <!-- Slide 1 (Netflix ID: 1) -->
+                    <div class="w-full flex-shrink-0 h-full cursor-pointer" onclick="scrollToProduct(1)">
                         <img src="main-banner-1.png" alt="Slide 1" class="w-full h-full object-cover min-h-[250px] lg:min-h-[400px]">
                     </div>
-                    <!-- Slide 2 -->
-                    <div class="w-full flex-shrink-0 h-full">
+                    <!-- Slide 2 (PrimeVideo ID: 2) -->
+                    <div class="w-full flex-shrink-0 h-full cursor-pointer" onclick="scrollToProduct(2)">
                         <img src="main-banner-2.png" alt="Slide 2" class="w-full h-full object-cover min-h-[250px] lg:min-h-[400px]">
                     </div>
-                    <!-- Slide 3 -->
-                    <div class="w-full flex-shrink-0 h-full">
+                    <!-- Slide 3 (Spotify ID: 3) -->
+                    <div class="w-full flex-shrink-0 h-full cursor-pointer" onclick="scrollToProduct(3)">
                         <img src="main-banner-3.png" alt="Slide 3" class="w-full h-full object-cover min-h-[250px] lg:min-h-[400px]">
                     </div>
-                    <!-- Slide 4 -->
-                    <div class="w-full flex-shrink-0 h-full">
+                    <!-- Slide 4 (YouTube Premium ID: 7) -->
+                    <div class="w-full flex-shrink-0 h-full cursor-pointer" onclick="scrollToProduct(7)">
                         <img src="main-banner-4.png" alt="Slide 4" class="w-full h-full object-cover min-h-[250px] lg:min-h-[400px]">
                     </div>
-                    <!-- Slide 5 -->
-                    <div class="w-full flex-shrink-0 h-full">
+                    <!-- Slide 5 (Chorki ID: 9) -->
+                    <div class="w-full flex-shrink-0 h-full cursor-pointer" onclick="scrollToProduct(9)">
                         <img src="main-banner-5.png" alt="Slide 5" class="w-full h-full object-cover min-h-[250px] lg:min-h-[400px]">
                     </div>
                 </div>
@@ -202,13 +202,13 @@
 
             <!-- Stacked Side Banners (Right Side) -->
             <div class="flex flex-col gap-6">
-                <!-- Top Side Banner -->
-                <a href="#" class="relative rounded-2xl overflow-hidden glass-card border border-white/10 bg-slate-800/50 group block h-full shadow-xl">
+                <!-- Top Side Banner (ChatGPT ID: 4) -->
+                <a href="javascript:void(0)" onclick="scrollToProduct(4)" class="relative rounded-2xl overflow-hidden glass-card border border-white/10 bg-slate-800/50 group block h-full shadow-xl cursor-pointer">
                     <img src="side-banner-1.png" alt="ChatGPT Plus Offer" class="w-full h-full object-cover min-h-[150px] transition-transform duration-700 group-hover:scale-105">
                 </a>
                 
-                <!-- Bottom Side Banner -->
-                <a href="#" class="relative rounded-2xl overflow-hidden glass-card border border-white/10 bg-slate-800/50 group block h-full shadow-xl">
+                <!-- Bottom Side Banner (Netflix+Prime ID: 10) -->
+                <a href="javascript:void(0)" onclick="scrollToProduct(10)" class="relative rounded-2xl overflow-hidden glass-card border border-white/10 bg-slate-800/50 group block h-full shadow-xl cursor-pointer">
                     <img src="side-banner-2.png" alt="Netflix and Prime Combo" class="w-full h-full object-cover min-h-[150px] transition-transform duration-700 group-hover:scale-105">
                 </a>
             </div>
@@ -417,11 +417,11 @@
             document.getElementById(`price-display-${uniqueId}`).innerText = `৳${newPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
         }
 
-        // Helper function to generate HTML for a product card with digital theme
+       // Helper function to generate HTML for a product card with digital theme
         function createProductCardHTML(p, instancePrefix) {
             const uniqueId = `${instancePrefix}-${p.id}`;
             return `
-                <div class="glass-card rounded-2xl p-4 flex flex-col group relative overflow-hidden">
+                <div id="card-${instancePrefix}-${p.id}" class="glass-card rounded-2xl p-4 flex flex-col group relative overflow-hidden">
                     <!-- Glow effect behind image -->
                     <div class="absolute top-4 left-4 right-4 h-48 bg-gradient-to-b from-blue-500/20 to-purple-500/20 blur-xl rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"></div>
                     
@@ -606,6 +606,31 @@
             const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
             
             window.open(whatsappURL, '_blank');
+        }
+        // Function to scroll smoothly to a specific product
+        function scrollToProduct(productId) {
+            // Find the product in the "All Products" section
+            const targetCard = document.getElementById(`card-all-${productId}`);
+            
+            if (targetCard) {
+                // Calculate position with a 120px offset to account for your fixed glass-nav
+                const yOffset = -120; 
+                const y = targetCard.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                
+                // Scroll smoothly
+                window.scrollTo({top: y, behavior: 'smooth'});
+
+                // Add a temporary purple glow effect to highlight the selected product
+                targetCard.style.transition = 'all 0.5s ease';
+                targetCard.style.boxShadow = '0 0 40px rgba(168, 85, 247, 0.6)';
+                targetCard.style.borderColor = 'rgba(168, 85, 247, 1)';
+                
+                // Remove the glow after 2 seconds
+                setTimeout(() => {
+                    targetCard.style.boxShadow = '';
+                    targetCard.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+                }, 2000);
+            }
         }
     // --- Slider Logic ---
         let currentSlide = 0;
