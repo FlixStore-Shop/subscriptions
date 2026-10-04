@@ -424,8 +424,10 @@
                     <!-- Glow effect behind image -->
                     <div class="absolute top-4 left-4 right-4 h-48 bg-gradient-to-b from-blue-500/20 to-purple-500/20 blur-xl rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"></div>
                     
-                    <div class="relative z-10 rounded-xl overflow-hidden mb-5 border border-white/5 bg-slate-800">
-                        <img src="${p.img}" alt="${p.name}" class="w-full h-48 object-cover transform group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100 mix-blend-lighten">
+                    <!-- Added aspect-square to the container to force 1:1 ratio -->
+                    <div class="relative z-10 rounded-xl overflow-hidden mb-5 border border-white/5 bg-slate-800 aspect-square">
+                        <!-- Changed h-48 to h-full so the image fills the square container -->
+                        <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100 mix-blend-lighten">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-60"></div>
                     </div>
                     
