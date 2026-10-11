@@ -850,74 +850,83 @@
         }
 
         function scrollToProduct(productId) {
-            function startBkashCheckout() {
-        if (cart.length === 0) {
-            showToast("Your cart is empty! Please add items first.");
-            return;
-        }
-        // Close cart sidebar
-        const sidebar = document.getElementById('cart-sidebar');
-        if (sidebar.classList.contains('translate-x-0')) toggleCart();
-
-        // Update total
-        const total = cart.reduce((sum, item) => sum + item.price, 0);
-        document.getElementById('bkash-total-display').innerText = `৳${total.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-        document.getElementById('trx-input').value = "";
-        
-        // Open modal
-        const overlay = document.getElementById('bkash-modal-overlay');
-        overlay.classList.remove('opacity-0', 'pointer-events-none');
-        overlay.classList.add('opacity-100');
-    }
-
-    function closeBkashModal(e) {
-        const overlay = document.getElementById('bkash-modal-overlay');
-        overlay.classList.remove('opacity-100');
-        overlay.classList.add('opacity-0', 'pointer-events-none');
-    }
-
-    function copyBkashNumber() {
-        const number = document.getElementById('bkash-number').innerText;
-        navigator.clipboard.writeText(number);
-        showToast("bKash number copied to clipboard!");
-    }
-
-    async function submitTransactionVerification() {
-        const trxId = document.getElementById('trx-input').value.trim();
-        if (!trxId) {
-            showToast("Please enter a valid Transaction ID.");
-            return;
+            const targetCard = document.getElementById(`card-all-${productId}`);
+            if (targetCard) {
+                const y = targetCard.getBoundingClientRect().top + window.pageYOffset - 120;
+                window.scrollTo({top: y, behavior: 'smooth'});
+                targetCard.style.transition = 'all 0.5s ease';
+                targetCard.style.boxShadow = '0 0 40px rgba(168, 85, 247, 0.6)';
+                targetCard.style.borderColor = 'rgba(168, 85, 247, 1)';
+                setTimeout(() => {
+                    targetCard.style.boxShadow = '';
+                    targetCard.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+                }, 2000);
+            }
         }
 
-        const verifyBtn = document.getElementById('verify-trx-btn');
-        verifyBtn.innerText = "Redirecting to WhatsApp...";
-        verifyBtn.disabled = true;
+        function startBkashCheckout() {
+            if (cart.length === 0) {
+                showToast("Your cart is empty! Please add items first.");
+                return;
+            }
+            
+            const sidebar = document.getElementById('cart-sidebar');
+            if (sidebar.classList.contains('translate-x-0')) toggleCart();
 
-        // Build the formatted order message
-        let message = "💳 *New bKash Order*\n\n";
-        cart.forEach((item, index) => {
-            message += `${index + 1}. ${item.name} (${item.months} Month${item.months > 1 ? 's' : ''})\n`;
-        });
-        
-        const total = cart.reduce((sum, item) => sum + item.price, 0);
-        message += `\n*Total Amount:* ৳${total.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-        message += `\n*TrxID:* ${trxId}`;
-        message += `\n\nPlease verify my payment and send the credentials.`;
-
-        // Open WhatsApp in a new tab
-        window.open(`https://wa.me/8801343546958?text=${encodeURIComponent(message)}`, '_blank');
-        
-        // Reset the modal and empty the cart after redirecting
-        setTimeout(() => {
-            closeBkashModal(new Event('click'));
-            cart = [];
-            updateCart();
-            verifyBtn.innerText = "Confirm Payment & Reveal Product";
-            verifyBtn.disabled = false;
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            document.getElementById('bkash-total-display').innerText = `৳${total.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
             document.getElementById('trx-input').value = "";
-        }, 1500);
-    }
-               
+            
+            const overlay = document.getElementById('bkash-modal-overlay');
+            overlay.classList.remove('opacity-0', 'pointer-events-none');
+            overlay.classList.add('opacity-100');
+        }
+
+        function closeBkashModal(e) {
+            const overlay = document.getElementById('bkash-modal-overlay');
+            overlay.classList.remove('opacity-100');
+            overlay.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        function copyBkashNumber() {
+            const number = document.getElementById('bkash-number').innerText;
+            navigator.clipboard.writeText(number);
+            showToast("bKash number copied to clipboard!");
+        }
+
+        function submitTransactionVerification() {
+            const trxId = document.getElementById('trx-input').value.trim();
+            if (!trxId) {
+                showToast("Please enter a valid Transaction ID.");
+                return;
+            }
+
+            const verifyBtn = document.getElementById('verify-trx-btn');
+            verifyBtn.innerText = "Redirecting to WhatsApp...";
+            verifyBtn.disabled = true;
+
+            let message = "💳 *New bKash Order*\n\n";
+            cart.forEach((item, index) => {
+                message += `${index + 1}. ${item.name} (${item.months} Month${item.months > 1 ? 's' : ''})\n`;
+            });
+            
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            message += `\n*Total Amount:* ৳${total.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+            message += `\n*TrxID:* ${trxId}`;
+            message += `\n\nPlease verify my payment and send the credentials.`;
+
+            window.open(`https://wa.me/8801343546958?text=${encodeURIComponent(message)}`, '_blank');
+            
+            setTimeout(() => {
+                closeBkashModal(new Event('click'));
+                cart = [];
+                updateCart();
+                verifyBtn.innerText = "Confirm Payment & Reveal Product";
+                verifyBtn.disabled = false;
+                document.getElementById('trx-input').value = "";
+            }, 1500);
+        }
+
         // --- Slider Logic ---
         let currentSlide = 0;
         const totalSlides = 5;
